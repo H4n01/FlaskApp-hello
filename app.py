@@ -2,10 +2,12 @@ from flask import Flask
 
 app = Flask(__name__)
 
-
 @app.route('/')
-def index():
-    return 'Hello World AWS!'
+# ‘/’ URL is bound with hello_world() function.
+def hello_world():
+    return 'Hello World'
 
+# main driver function
 if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+    app.run()
+
