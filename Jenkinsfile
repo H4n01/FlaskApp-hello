@@ -1,15 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Git Checkout') {
-            steps {
-                script {
-                    git branch: 'main',
-                        credentialsId: 'h4n01/******',
-                        url: 'https://github.com/H4n01/FlaskApp-hello.git'
-                }
-            }
-        }
         stage('DELETE CONTAINER') {
             steps {
                 sh 'docker rm flask-app --force'
