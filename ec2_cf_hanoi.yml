@@ -1,4 +1,8 @@
 Parameters:
+  AvailabilityZone:
+    Type: AWS::EC2::AvailabilityZone
+    Description: The Availability Zone in which to launch the EC2 instance.
+
   AmiId:
    Type: AWS::EC2::Image
    Description: The AMI ID to use for the EC2 instance.
@@ -28,7 +32,7 @@ Resources:
   MyInstance:
     Type: AWS::EC2::Instance
     Properties:
-      AvailabilityZone: us-east-1a
+      AvailabilityZone: !Ref AvailabilityZone
       ImageId: !Ref AmiId
       InstanceType: !Ref InstanceType
       NetworkInterfaces:
@@ -40,8 +44,6 @@ Resources:
       KeyName: !Ref SSHKey
       SecurityGroups:
         - !Ref SecurityGroup
-
-
 
 
 
