@@ -10,6 +10,10 @@ Parameters:
   InstanceName:
     Type: String
     Description: The name to give the EC2 instance.
+    
+  InstanceType:
+    Type: AWS::EC2::InstanceType
+    Description: The InstanceType to use for the EC2 instance.
    
   IpAddress:
     Type: String
@@ -26,7 +30,7 @@ Resources:
     Properties:
       AvailabilityZone: us-east-1a
       ImageId: !Ref AmiId
-      InstanceType: t2.micro
+      InstanceType: !Ref InstanceType
       NetworkInterfaces:
         - DeviceIndex: 0
           AssociatePublicIpAddress: true
@@ -36,6 +40,8 @@ Resources:
       KeyName: !Ref SSHKey
       SecurityGroups:
         - !Ref SecurityGroup
+
+
 
 
 
