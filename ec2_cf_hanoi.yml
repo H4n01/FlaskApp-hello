@@ -1,3 +1,6 @@
+AWSTemplateFormatVersion: 2023-10-27
+Description: This template creates a simple stack.
+
 Parameters:
   AvailabilityZone:
     Type: AWS::EC2::AvailabilityZone
