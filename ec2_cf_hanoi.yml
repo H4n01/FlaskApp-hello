@@ -1,37 +1,25 @@
-Description: This template creates a simple stack.
-
 Parameters:
   SSHKey:
     Type: AWS::EC2::KeyPair::KeyName
     Description: name of the key pair to ssh into the instance
+    Default: hanoi-key
 
-  AvailabilityZone:
-    Type: AWS::EC2::AvailabilityZone
-    Description: The Availability Zone in which to launch the EC2 instance.
-    Default: us-east-1
-	
-  AmiId:
-   Type: AWS::EC2::Image
-   Description: The AMI ID to use for the EC2 instance.
-   
-  InstanceName:
+  EC2InstanceType:
+    Description: The Instance Type Chosen for EC2
     Type: String
-    Description: The name to give the EC2 instance.
-    
-  InstanceType:
-    Type: AWS::EC2::InstanceType
-    Description: The InstanceType to use for the EC2 instance.
-
+    Default: t2.micro
 
 Resources:
   MyInstance:
     Type: AWS::EC2::Instance
     Properties:
-      AvailabilityZone: !Ref AvailabilityZone
-      ImageId: !Ref AmiId
-      InstanceType: !Ref InstanceType
-      HostName: !Ref InstanceName
+      AvailabilityZone: us-east-1a
+      ImageId: ami-053b0d53c279acc90
+      InstanceType: !Ref EC2InstanceType
       KeyName: !Ref SSHKey
+      Tags:
+        - Key: Name
+          Value: !Ref 'AWS::StackName'
       SecurityGroupIds:
         - !Ref WebAppSG
 
@@ -39,6 +27,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: "Allow HTTP/HTTPS and SSH inbound and outbound traffic"
+      GroupName: WebAppSG
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
@@ -56,3 +45,4 @@ Resources:
           FromPort: 9000
           ToPort: 9000
           CidrIp: 0.0.0.0/0
+
