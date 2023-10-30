@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: 2010-09-09
+AWSTemplateFormatVersion: 2023-10-30
 Description: This template creates a simple stack.
 
 Parameters:
