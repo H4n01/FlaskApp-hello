@@ -1,3 +1,6 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: This template creates a simple stack.
+
 Parameters:
   SSHKey:
     Type: AWS::EC2::KeyPair::KeyName
@@ -8,13 +11,18 @@ Parameters:
     Description: The Instance Type Chosen for EC2
     Type: String
     Default: t2.micro
+  
+  AmiId:
+   Type: AWS::EC2::Image
+   Description: The AMI ID to use for the EC2 instance.
+   Default: ami-053b0d53c279acc90
 
 Resources:
   MyInstance:
     Type: AWS::EC2::Instance
     Properties:
       AvailabilityZone: us-east-1a
-      ImageId: ami-053b0d53c279acc90
+      ImageId: !Ref AmiId
       InstanceType: !Ref EC2InstanceType
       KeyName: !Ref SSHKey
       Tags:
