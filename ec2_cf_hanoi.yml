@@ -1,35 +1,27 @@
-AWSTemplateFormatVersion: 2023-10-27
 Description: This template creates a simple stack.
 
 Parameters:
+  SSHKey:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: name of the key pair to ssh into the instance
+
   AvailabilityZone:
     Type: AWS::EC2::AvailabilityZone
     Description: The Availability Zone in which to launch the EC2 instance.
-
+    Default: us-east-1
+	
   AmiId:
    Type: AWS::EC2::Image
    Description: The AMI ID to use for the EC2 instance.
    
-  SecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Description: The security group to associate with the EC2 instance.
-    
-  InstanceName:
+ InstanceName:
     Type: String
     Description: The name to give the EC2 instance.
     
   InstanceType:
     Type: AWS::EC2::InstanceType
     Description: The InstanceType to use for the EC2 instance.
-   
-  IpAddress:
-    Type: String
-    Description: The IP address to assign to the EC2 instance.
-   
-  SSHKey:
-    Type: AWS::EC2::KeyPair::KeyName
-    Description: name of the key pair to ssh into the instance
-    
+
 
 Resources:
   MyInstance:
@@ -38,15 +30,29 @@ Resources:
       AvailabilityZone: !Ref AvailabilityZone
       ImageId: !Ref AmiId
       InstanceType: !Ref InstanceType
-      NetworkInterfaces:
-        - DeviceIndex: 0
-          AssociatePublicIpAddress: true
-          PrivateIpAddresses:
-            - !Ref IpAddress
       HostName: !Ref InstanceName
       KeyName: !Ref SSHKey
-      SecurityGroups:
-        - !Ref SecurityGroup
+      SecurityGroupIds:
+        - !Ref WebAppSG
 
-
-
+  WebAppSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow HTTP/HTTPS and SSH inbound and outbound traffic"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 9000
+          ToPort: 9000
+          CidrIp: 0.0.0.0/0
