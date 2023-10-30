@@ -14,7 +14,7 @@ Parameters:
    Type: AWS::EC2::Image
    Description: The AMI ID to use for the EC2 instance.
    
- InstanceName:
+  InstanceName:
     Type: String
     Description: The name to give the EC2 instance.
     
